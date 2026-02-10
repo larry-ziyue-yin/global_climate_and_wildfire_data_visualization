@@ -3,6 +3,7 @@
 
 Reads large yearly NASA VIIRS fire archives and outputs reservoir samples so
 the frontend can animate by year without loading tens of millions of rows.
+Run from repository root.
 """
 
 from __future__ import annotations
@@ -12,8 +13,9 @@ import random
 from pathlib import Path
 
 
-INPUT_DIR = Path("data/wild_fire_nasa")
-OUTPUT_DIR = Path("data/preprocessed/vis2")
+REPO_ROOT = Path(__file__).resolve().parent.parent
+INPUT_DIR = REPO_ROOT / "data" / "wild_fire_nasa"
+OUTPUT_DIR = REPO_ROOT / "data" / "preprocessed" / "vis2"
 YEARS = [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
 SAMPLE_SIZE = 15000
 SEED_BASE = 401

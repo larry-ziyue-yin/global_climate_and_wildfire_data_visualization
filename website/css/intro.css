@@ -1,0 +1,140 @@
+.intro-info-card,
+.intro-guide-card,
+.intro-team-card {
+  padding: 1rem;
+}
+
+.intro-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.intro-panel {
+  border: 1px solid rgba(22, 36, 47, 0.12);
+  border-radius: 14px;
+  background: #ffffffd6;
+  padding: 0.85rem 0.95rem;
+}
+
+.intro-panel h2 {
+  margin: 0;
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: 1.05rem;
+  color: #1f3b47;
+}
+
+.intro-panel h3 {
+  margin: 0.75rem 0 0.4rem;
+  font-size: 0.86rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #4d6571;
+}
+
+.intro-panel p {
+  margin: 0.5rem 0 0;
+  color: #475f6c;
+  line-height: 1.45;
+}
+
+.intro-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.32rem;
+  color: #334f5c;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.dataset-list code {
+  font-size: 0.82rem;
+  background: rgba(36, 67, 77, 0.09);
+  border-radius: 6px;
+  padding: 0.08rem 0.28rem;
+}
+
+.guide-title {
+  margin: 0 0 0.7rem;
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: 1.08rem;
+  color: #1f3b47;
+}
+
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.guide-card {
+  border: 1px solid rgba(22, 36, 47, 0.12);
+  border-radius: 14px;
+  padding: 0.72rem 0.75rem;
+  background: #ffffffdc;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.guide-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(36, 67, 77, 0.32);
+  box-shadow: 0 8px 16px rgba(22, 36, 47, 0.1);
+}
+
+.guide-tag {
+  margin: 0;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #546c79;
+}
+
+.guide-card h3 {
+  margin: 0.34rem 0 0.36rem;
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: 0.98rem;
+  color: #173844;
+}
+
+.guide-card p {
+  margin: 0;
+  color: #4d6572;
+  font-size: 0.89rem;
+  line-height: 1.36;
+}
+
+.team-content {
+  border: 1px solid rgba(22, 36, 47, 0.12);
+  border-radius: 14px;
+  background: #ffffffd6;
+  padding: 0.85rem 0.95rem;
+}
+
+.team-content h2 {
+  margin: 0 0 0.6rem;
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: 1.02rem;
+  color: #1f3b47;
+}
+
+.team-content p {
+  margin: 0.25rem 0;
+  color: #3f5a67;
+}
+
+@media (max-width: 1100px) {
+  .guide-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .intro-grid,
+  .guide-grid {
+    grid-template-columns: 1fr;
+  }
+}

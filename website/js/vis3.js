@@ -1,6 +1,6 @@
 const SVG_W = 980;
 const SVG_H = 580;
-const margin = { top: 34, right: 26, bottom: 70, left: 76 };
+const margin = { top: 34, right: 26, bottom: 92, left: 76 };
 const innerW = SVG_W - margin.left - margin.right;
 const innerH = SVG_H - margin.top - margin.bottom;
 
@@ -51,7 +51,7 @@ const bubbleG = plotG.append("g");
 
 plotG.append("text")
     .attr("x", innerW / 2)
-    .attr("y", innerH + 48)
+    .attr("y", innerH + 44)
     .attr("text-anchor", "middle")
     .style("font-size", "13px")
     .style("font-weight", "700")
@@ -193,28 +193,31 @@ function attachFilterControls() {
 
 function renderLegend(activeRegions) {
     svg.selectAll(".region-legend").remove();
+    const legendColWidth = 146;
+    const legendTopY = SVG_H - 8;
+
     const legend = svg.append("g")
         .attr("class", "region-legend")
-        .attr("transform", `translate(${margin.left}, ${SVG_H - 18})`);
+        .attr("transform", `translate(${margin.left}, ${legendTopY})`);
 
     legend.append("text")
         .attr("x", 0)
-        .attr("y", -18)
+        .attr("y", -16)
         .style("font-size", "12px")
         .style("font-weight", "700")
         .style("fill", "#2f4b58")
         .text("Region Colors");
 
     activeRegions.forEach((region, i) => {
-        const g = legend.append("g").attr("transform", `translate(${i * 146}, 0)`);
+        const g = legend.append("g").attr("transform", `translate(${i * legendColWidth}, 0)`);
         g.append("circle")
             .attr("r", 6)
             .attr("cx", 6)
-            .attr("cy", -5)
+            .attr("cy", 0)
             .attr("fill", color(region));
         g.append("text")
             .attr("x", 17)
-            .attr("y", -1)
+            .attr("y", 4)
             .style("font-size", "11px")
             .style("fill", "#365260")
             .text(region);

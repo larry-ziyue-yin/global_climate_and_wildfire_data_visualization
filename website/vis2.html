@@ -43,6 +43,14 @@
       </p>
       <div class="control-grid">
         <div class="control-row control-row-primary">
+          <label class="control-label" for="time-scale-select">
+            Playback Scale
+            <select id="time-scale-select">
+              <option value="year" selected>Year</option>
+              <option value="month">Month</option>
+              <option value="day">Day</option>
+            </select>
+          </label>
           <label class="control-label" for="year-select">
             Year
             <select id="year-select"></select>
@@ -55,7 +63,7 @@
             Day
             <select id="day-select"></select>
           </label>
-          <button id="play-years" class="control-button">Play Years</button>
+          <button id="play-years" class="control-button">Play Timeline</button>
         </div>
         <div class="control-row control-row-secondary">
           <label class="control-label slider-control-label" for="speed-slider">
@@ -86,11 +94,11 @@
       <div id="vis2-stage" class="chart-wrap vis2-stage">
         <div class="viz-grid">
           <section class="viz-panel">
-            <h2>Yearly Detection Map</h2>
+            <h2>Detection Map</h2>
             <svg id="map-svg" aria-label="Global wildfire point map"></svg>
           </section>
           <section class="viz-panel">
-            <h2>Rotating Globe (drag to rotate)</h2>
+            <h2>Rotating Globe</h2>
             <svg id="globe-svg" aria-label="Rotating globe with wildfire points"></svg>
           </section>
         </div>

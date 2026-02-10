@@ -1,4 +1,4 @@
-const YEARS = [2020, 2021, 2022, 2023, 2024, 2025];
+const YEARS = [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
 const FIRE_TYPE_META = [
     { key: "0", label: "Vegetation fire", color: "#f05d23" },
     { key: "1", label: "Active volcano", color: "#7a3e9d" },
@@ -31,12 +31,16 @@ let currentYearSamplePoints = [];
 let isYearPlaying = false;
 let yearPlaybackTimer = null;
 let yearTickBusy = false;
+let playbackFrames = [];
+let playbackFrameIndex = -1;
+let allYearsPreloaded = false;
 let globeAutoRotate = true;
 let globeRotationTimer = null;
 
 const stage = d3.select("#vis2-stage");
 const statusLine = d3.select("#status-line");
 const tooltip = d3.select("#vis2-tooltip");
+const timeScaleSelect = d3.select("#time-scale-select");
 const yearSelect = d3.select("#year-select");
 const monthSelect = d3.select("#month-select");
 const daySelect = d3.select("#day-select");
@@ -104,6 +108,12 @@ function getSelectedDay() {
     return +daySelect.property("value") || 0;
 }
 
+function getSelectedPlaybackScale() {
+    const scale = String(timeScaleSelect.property("value") || "year");
+    if (scale === "month" || scale === "day") return scale;
+    return "year";
+}
+
 function isYearOnlyScope() {
     return getSelectedMonth() === 0 && getSelectedDay() === 0;
 }
@@ -136,6 +146,66 @@ function buildSampleTypeCounts(points) {
     return byType;
 }
 
+async function preloadAllYearPoints() {
+    if (allYearsPreloaded) return;
+    await Promise.all(YEARS.map(loadYearPoints));
+    allYearsPreloaded = true;
+}
+
+function makeFrameKey(frame) {
+    return `${frame.year}-${frame.month || 0}-${frame.day || 0}`;
+}
+
+function buildYearFrames() {
+    const month = getSelectedMonth();
+    const day = month ? getSelectedDay() : 0;
+    return YEARS.map(year => ({ year, month, day }));
+}
+
+function buildMonthFrames() {
+    const frameMap = new Map();
+    YEARS.forEach(year => {
+        const points = yearCache.get(year) || [];
+        points.forEach(p => {
+            if (!Number.isFinite(p.month)) return;
+            const frame = { year, month: p.month, day: 0 };
+            frameMap.set(makeFrameKey(frame), frame);
+        });
+    });
+    return Array.from(frameMap.values()).sort((a, b) => (
+        a.year - b.year || a.month - b.month
+    ));
+}
+
+function buildDayFrames() {
+    const frameMap = new Map();
+    YEARS.forEach(year => {
+        const points = yearCache.get(year) || [];
+        points.forEach(p => {
+            if (!Number.isFinite(p.month) || !Number.isFinite(p.day)) return;
+            const frame = { year, month: p.month, day: p.day };
+            frameMap.set(makeFrameKey(frame), frame);
+        });
+    });
+    return Array.from(frameMap.values()).sort((a, b) => (
+        a.year - b.year || a.month - b.month || a.day - b.day
+    ));
+}
+
+function getCurrentFrameKey() {
+    return makeFrameKey({
+        year: currentYear,
+        month: getSelectedMonth(),
+        day: getSelectedDay()
+    });
+}
+
+function buildPlaybackFramesByScale(scale) {
+    if (scale === "year") return buildYearFrames();
+    if (scale === "month") return buildMonthFrames();
+    return buildDayFrames();
+}
+
 function populateMonthOptions() {
     monthSelect.selectAll("option")
         .data(MONTH_LABELS.map((label, idx) => ({ value: idx, label })))
@@ -146,9 +216,10 @@ function populateMonthOptions() {
     monthSelect.property("value", "0");
 }
 
-function populateDayOptions(month) {
+function populateDayOptions(month, year) {
     const selectedDay = getSelectedDay();
-    const maxDay = month ? new Date(2024, month, 0).getDate() : 31;
+    const yearForMonth = Number.isFinite(year) ? year : currentYear;
+    const maxDay = month ? new Date(yearForMonth, month, 0).getDate() : 31;
     const dayOptions = [{ value: 0, label: "All days" }];
     for (let d = 1; d <= maxDay; d += 1) {
         dayOptions.push({ value: d, label: String(d).padStart(2, "0") });
@@ -436,11 +507,35 @@ function renderGlobe(points) {
         .on("mouseleave", hideTooltip);
 }
 
-async function updateYear(year) {
-    currentYear = year;
-    yearSelect.property("value", String(year));
-    currentYearSamplePoints = await loadYearPoints(year);
+async function setTemporalSelection(target) {
+    const targetYear = Number.isFinite(target?.year) ? +target.year : currentYear;
+    let targetMonth = Number.isFinite(target?.month) ? +target.month : getSelectedMonth();
+    let targetDay = Number.isFinite(target?.day) ? +target.day : getSelectedDay();
+
+    targetMonth = Math.max(0, Math.min(12, targetMonth));
+    if (targetMonth === 0) targetDay = 0;
+    const maxDay = targetMonth ? new Date(targetYear, targetMonth, 0).getDate() : 31;
+    targetDay = Math.max(0, Math.min(maxDay, targetDay));
+
+    yearSelect.property("value", String(targetYear));
+    monthSelect.property("value", String(targetMonth));
+    populateDayOptions(targetMonth, targetYear);
+    syncDayControlState();
+    daySelect.property("value", String(targetDay));
+
+    if (targetYear !== currentYear || !currentYearSamplePoints.length) {
+        currentYearSamplePoints = await loadYearPoints(targetYear);
+    }
+    currentYear = targetYear;
     applyTemporalFilterAndRender();
+}
+
+async function updateYear(year) {
+    await setTemporalSelection({
+        year,
+        month: getSelectedMonth(),
+        day: getSelectedDay()
+    });
 }
 
 function applyTemporalFilterAndRender() {
@@ -455,23 +550,42 @@ function stopYearPlayback() {
     if (yearPlaybackTimer) clearInterval(yearPlaybackTimer);
     yearPlaybackTimer = null;
     isYearPlaying = false;
-    playYearsBtn.text("Play Years");
+    playYearsBtn.text("Play Timeline");
 }
 
-function startYearPlayback() {
+async function advancePlaybackFrame() {
+    if (!playbackFrames.length || yearTickBusy) return;
+    yearTickBusy = true;
+    try {
+        playbackFrameIndex = (playbackFrameIndex + 1) % playbackFrames.length;
+        await setTemporalSelection(playbackFrames[playbackFrameIndex]);
+    } finally {
+        yearTickBusy = false;
+    }
+}
+
+async function startYearPlayback() {
     stopYearPlayback();
     isYearPlaying = true;
-    playYearsBtn.text("Pause Years");
-    yearPlaybackTimer = setInterval(async () => {
-        if (yearTickBusy) return;
-        yearTickBusy = true;
-        const idx = YEARS.indexOf(currentYear);
-        const nextYear = YEARS[(idx + 1) % YEARS.length];
-        try {
-            await updateYear(nextYear);
-        } finally {
-            yearTickBusy = false;
-        }
+    playYearsBtn.text("Pause Timeline");
+
+    const scale = getSelectedPlaybackScale();
+    if (scale !== "year") {
+        await preloadAllYearPoints();
+    }
+    playbackFrames = buildPlaybackFramesByScale(scale);
+    if (!playbackFrames.length) {
+        stopYearPlayback();
+        statusLine.text(`No sampled frames available for ${scale}-level playback.`);
+        return;
+    }
+
+    const currentKey = getCurrentFrameKey();
+    playbackFrameIndex = playbackFrames.findIndex(frame => makeFrameKey(frame) === currentKey);
+    if (playbackFrameIndex < 0) playbackFrameIndex = -1;
+
+    yearPlaybackTimer = setInterval(() => {
+        void advancePlaybackFrame();
     }, getYearPlaybackIntervalMs());
 }
 
@@ -488,36 +602,57 @@ function initControls() {
         .text(d => d);
 
     populateMonthOptions();
-    populateDayOptions(0);
+    populateDayOptions(0, currentYear);
     syncDayControlState();
+
+    timeScaleSelect.on("change", function () {
+        if (isYearPlaying) {
+            void startYearPlayback();
+        }
+    });
 
     yearSelect.on("change", async function () {
         const year = +d3.select(this).property("value");
         await updateYear(year);
+        if (isYearPlaying) {
+            void startYearPlayback();
+        }
     });
 
-    monthSelect.on("change", function () {
+    monthSelect.on("change", async function () {
         const month = +d3.select(this).property("value");
-        populateDayOptions(month);
-        syncDayControlState();
-        applyTemporalFilterAndRender();
+        await setTemporalSelection({
+            year: currentYear,
+            month,
+            day: getSelectedDay()
+        });
+        if (isYearPlaying) {
+            void startYearPlayback();
+        }
     });
 
-    daySelect.on("change", function () {
-        applyTemporalFilterAndRender();
+    daySelect.on("change", async function () {
+        await setTemporalSelection({
+            year: currentYear,
+            month: getSelectedMonth(),
+            day: getSelectedDay()
+        });
+        if (isYearPlaying) {
+            void startYearPlayback();
+        }
     });
 
     playYearsBtn.on("click", function () {
         if (isYearPlaying) {
             stopYearPlayback();
         } else {
-            startYearPlayback();
+            void startYearPlayback();
         }
     });
 
     speedSlider.on("input", function () {
         setSpeedLabel();
-        if (isYearPlaying) startYearPlayback();
+        if (isYearPlaying) void startYearPlayback();
     });
     setSpeedLabel();
 

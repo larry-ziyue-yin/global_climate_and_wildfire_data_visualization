@@ -58,8 +58,10 @@
 }
 
 .vis3-layout {
+  --vis3-panel-height: clamp(560px, 66vh, 760px);
   display: grid;
-  grid-template-columns: 1.5fr 0.85fr;
+  grid-template-columns: minmax(0, 1.78fr) minmax(260px, 0.62fr);
+  align-items: stretch;
   gap: 0.8rem;
 }
 
@@ -69,14 +71,19 @@
   border-radius: 14px;
   background: #ffffffd6;
   padding: 0.6rem;
+  height: var(--vis3-panel-height);
+  display: flex;
+  overflow: hidden;
 }
 
 #bubble-svg {
+  flex: 1 1 auto;
+  min-height: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   border-radius: 10px;
-  background: radial-gradient(circle at 78% 4%, #f6fbff 0%, #eff4f8 46%, #e8f0f5 100%);
+  background: transparent;
 }
 
 #bubble-svg .x-grid line,
@@ -123,23 +130,46 @@
   border-radius: 14px;
   background: #ffffffd6;
   padding: 0.7rem 0.75rem;
-  max-height: 620px;
+  height: var(--vis3-panel-height);
+  display: grid;
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  gap: 0.45rem;
   overflow: auto;
 }
 
+.filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem;
+}
+
 .filter-panel h2 {
-  margin: 0 0 0.45rem;
+  margin: 0;
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   font-size: 1.03rem;
   color: #1f3b47;
 }
 
 .filter-panel h3 {
-  margin: 0.7rem 0 0.35rem;
+  margin: 0 0 0.35rem;
   font-size: 0.86rem;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   color: #4d6571;
+}
+
+.filter-section {
+  border: 1px solid rgba(22, 36, 47, 0.1);
+  border-radius: 10px;
+  padding: 0.45rem 0.5rem 0.5rem;
+  background: #fdfefe;
+}
+
+.filter-section-countries {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .filter-controls {
@@ -168,6 +198,11 @@
   gap: 0.28rem;
 }
 
+#region-filter {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem 0.5rem;
+}
+
 .checkbox-list label {
   display: flex;
   align-items: center;
@@ -186,7 +221,8 @@
 }
 
 .country-list {
-  max-height: 280px;
+  flex: 1 1 auto;
+  min-height: 180px;
   overflow: auto;
   border: 1px solid rgba(22, 36, 47, 0.12);
   border-radius: 10px;
@@ -197,6 +233,12 @@
 @media (max-width: 1100px) {
   .vis3-layout {
     grid-template-columns: 1fr;
+    --vis3-panel-height: auto;
+  }
+
+  .chart-panel,
+  .filter-panel {
+    height: auto;
   }
 }
 
@@ -209,5 +251,9 @@
   #year-slider,
   #speed-slider {
     width: 100%;
+  }
+
+  #region-filter {
+    grid-template-columns: 1fr;
   }
 }

@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="css/vis1.css">
+  <link rel="stylesheet" type="text/css" href="css/intro.css?v=20260210a">
 </head>
 <body>
   <div class="bg-layer bg-layer-top"></div>
@@ -36,16 +37,81 @@
   <main class="page-content">
     <section class="intro-card">
       <p class="eyebrow">Introduction</p>
-      <h1>Global Climate and Disaster Data Story</h1>
-      <p class="intro-text">This site presents a sequence of interactive visualizations for climate indicators and wildfire/disaster related signals. Use the top navigation to access each visualization module.</p>
+      <h1>Global Climate and Wildfire Data Story</h1>
+      <p class="intro-text">
+        This project explores how climate indicators and global wildfire detections co-evolve over time.
+        We combine yearly climate summaries with wildfire detection records and build linked visual narratives
+        across multiple interactive views.
+      </p>
     </section>
 
-    <section class="chart-card">
-      <div class="chart-wrap chart-placeholder-wrap">
-        <div class="chart-placeholder">
-          <p class="placeholder-title">Project Overview</p>
-          <p>Introduce your data sources, preprocessing pipeline, and research questions here.</p>
-        </div>
+    <section class="chart-card intro-info-card">
+      <div class="intro-grid">
+        <article class="intro-panel">
+          <h2>Project Focus</h2>
+          <p>
+            We study global wildfire detections and compare them with three climate signals:
+            CO2 emissions, near-surface temperature, and precipitation.
+          </p>
+          <h3>Core Questions</h3>
+          <ul class="intro-list">
+            <li>How do wildfire detections change across years, months, and days?</li>
+            <li>Do climate indicators show similar long-term trends with wildfire activity?</li>
+            <li>How do country-level CO2 and temperature-change patterns differ by region?</li>
+          </ul>
+        </article>
+
+        <article class="intro-panel">
+          <h2>Data Assets</h2>
+          <ul class="intro-list dataset-list">
+            <li><code>data/preprocessed/wildfire_count_by_year_type.csv</code> yearly wildfire counts by fire/source type</li>
+            <li><code>data/preprocessed/vis2/fire_points_YYYY.csv</code> sampled geospatial wildfire points for map/globe playback</li>
+            <li><code>data/preprocessed/global_co2_by_year.csv</code> global yearly CO2 totals</li>
+            <li><code>data/preprocessed/global_tem_by_year.csv</code> global yearly temperature summary</li>
+            <li><code>data/preprocessed/global_precip_by_year.csv</code> global yearly precipitation summary</li>
+            <li><code>data/co2/owid-co2-data.csv</code> country-level CO2, population, and temperature-change metrics</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="chart-card intro-guide-card">
+      <h2 class="guide-title">Visualization Guide</h2>
+      <div class="guide-grid">
+        <a class="guide-card" href="./vis1.html">
+          <p class="guide-tag">Visualization 1</p>
+          <h3>Climate Drivers + Fire Counts</h3>
+          <p>Stacked bars with metric-switchable trend line.</p>
+        </a>
+        <a class="guide-card" href="./vis2.html">
+          <p class="guide-tag">Visualization 2</p>
+          <h3>Global Map + Rotating Globe</h3>
+          <p>Spatial wildfire points with year/month/day playback.</p>
+        </a>
+        <a class="guide-card" href="./vis3.html">
+          <p class="guide-tag">Visualization 3</p>
+          <h3>Country Bubble Plot</h3>
+          <p>CO2 vs temperature change, with population-sized bubbles.</p>
+        </a>
+        <a class="guide-card" href="./vis4.html">
+          <p class="guide-tag">Visualization 4</p>
+          <h3>In Progress</h3>
+          <p>Reserved for your fourth analytical view.</p>
+        </a>
+        <a class="guide-card" href="./vis5.html">
+          <p class="guide-tag">Visualization 5</p>
+          <h3>In Progress</h3>
+          <p>Reserved for your final synthesis view.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="chart-card intro-team-card">
+      <div class="team-content">
+        <h2>Course and Team</h2>
+        <p><strong>Course:</strong> STATS 401: Data Acquisition and Visualization</p>
+        <p><strong>Institution:</strong> Duke Kunshan University</p>
+        <p><strong>Group 10:</strong> Ziyue Yin, Xin Jiang, Yitong Zhou</p>
       </div>
     </section>
   </main>

@@ -1,2 +1,2 @@
-data/** filter=lfs diff=lfs merge=lfs -text
-data/**/*.py !filter !diff !merge text
+# Git LFS is disabled for this repository.
+data/**/*.py text

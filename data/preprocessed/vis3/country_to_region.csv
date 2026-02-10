@@ -1,3 +1,187 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9a9a31cafda2aed8eafd8d1ce2af284cbd607d5b44cc47726e085c939912e1f7
-size 3129
+Country,Region
+Afghanistan,Asia
+Albania,Europe
+Algeria,Africa
+Andorra,Europe
+Angola,Africa
+Anguilla,Europe
+Antarctica,Antartica
+Argentina,America
+Armenia,Europe
+Aruba,America
+Australia,Oceania
+Austria,Europe
+Azerbaijan,Asia
+Bahamas,America
+Bahrain,Asia
+Bangladesh,Asia
+Barbados,America
+Belarus,Europe
+Belgium,Europe
+Belize,America
+Benin,Africa
+Bhutan,Asia
+Bolivia,America
+Botswana,Africa
+Brazil,America
+Bulgaria,Europe
+Burkina Faso,Africa
+Burundi,Africa
+Cambodia,Asia
+Cameroon,Africa
+Canada,America
+Cape Verde,Africa
+Central African Republic,Africa
+Chad,Africa
+Chile,America
+China,Asia
+Christmas Island,Oceania
+Colombia,America
+Comoros,Africa
+Congo,Africa
+Costa Rica,America
+Croatia,Europe
+Cuba,America
+Cyprus,Europe
+Denmark,Europe
+Djibouti,Africa
+Dominica,America
+Dominican Republic,America
+Ecuador,America
+Egypt,Africa
+El Salvador,America
+Equatorial Guinea,America
+Eritrea,Africa
+Estonia,Europe
+Ethiopia,Africa
+Fiji,Oceania
+Finland,Europe
+France,Europe
+French Guiana,America
+French Polynesia,Oceania
+Gabon,Africa
+Gambia,Africa
+Georgia,Europe
+Germany,Europe
+Ghana,Africa
+Greece,Europe
+Greenland,Europe
+Grenada,Europe
+Guadeloupe,America
+Guatemala,America
+Guinea,Africa
+Guyana,America
+Haiti,America
+Honduras,America
+Hong Kong,Asia
+Hungary,Europe
+Iceland,Europe
+India,Asia
+Indonesia,Asia
+Iran,Asia
+Iraq,Asia
+Ireland,Europe
+Israel,Asia
+Italy,Europe
+Jamaica,America
+Japan,Asia
+Jordan,Asia
+Kazakhstan,Asia
+Kenya,Africa
+Kiribati,Africa
+Kuwait,Asia
+Kyrgyzstan,Asia
+Laos,Asia
+Latvia,Europe
+Lebanon,Asia
+Lesotho,Africa
+Liberia,Africa
+Libya,Africa
+Liechtenstein,Europe
+Lithuania,Europe
+Luxembourg,Europe
+Madagascar,Africa
+Malawi,Africa
+Malaysia,Asia
+Mali,Africa
+Malta,Europe
+Martinique,America
+Mauritania,Africa
+Mauritius,Africa
+Mayotte,Africa
+Mexico,America
+Moldova,Europe
+Mongolia,Asia
+Montenegro,Europe
+Montserrat,America
+Morocco,Africa
+Mozambique,Africa
+Namibia,Africa
+Nepal,Asia
+Netherlands,Europe
+New Caledonia,Oceania
+New Zealand,Oceania
+Nicaragua,America
+Niger,Africa
+Nigeria,Africa
+Niue,Oceania
+North Korea,Asia
+Norway,Europe
+Oman,Asia
+Pakistan,Asia
+Palau,Oceania
+Panama,America
+Papua New Guinea,Oceania
+Paraguay,America
+Peru,America
+Philippines,Asia
+Poland,Europe
+Portugal,Europe
+Puerto Rico,America
+Qatar,Asia
+Reunion,Africa
+Romania,Europe
+Russia,Asia
+Rwanda,Africa
+Saint Lucia,America
+Samoa,Africa
+Saudi Arabia,Asia
+Senegal,Africa
+Serbia,Europe
+Seychelles,Africa
+Sierra Leone,Africa
+Singapore,Asia
+Slovakia,Europe
+Slovenia,Europe
+Solomon Islands,Oceania
+Somalia,Africa
+South Africa,Africa
+South Korea,Asia
+Spain,Europe
+Sri Lanka,Asia
+Sudan,Africa
+Suriname,America
+Sweden,Europe
+Switzerland,Europe
+Syria,Asia
+Taiwan,Asia
+Tajikistan,Asia
+Tanzania,Africa
+Thailand,Asia
+Togo,Africa
+Tonga,Oceania
+Tunisia,Africa
+Turkey,Europe
+Turkmenistan,Asia
+Uganda,Africa
+Ukraine,Europe
+United Arab Emirates,Asia
+United Kingdom,Europe
+United States,America
+Uruguay,America
+Uzbekistan,Asia
+Venezuela,America
+Vietnam,Asia
+Yemen,Asia
+Zambia,Africa
+Zimbabwe,Africa

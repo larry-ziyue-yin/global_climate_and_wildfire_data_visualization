@@ -24,8 +24,6 @@ const playBtn = d3.select("#play-button");
 const speedSlider = d3.select("#speed-slider");
 const speedValue = d3.select("#speed-value");
 const statusLine = d3.select("#vis4-status");
-
-const variableLegend = d3.select("#variable-legend");
 const insightsList = d3.select("#insights-list");
 
 // Variable configurations
@@ -303,23 +301,17 @@ function generateInsights(correlations) {
 function renderHeatmap(correlations) {
     plotG.selectAll("*").remove();
     
-    const gridSize = Math.min(innerW, innerH) / variables.length;
+    const matrixSize = Math.min(innerW, innerH);
+    const gridSize = matrixSize / variables.length;
     const xScale = d3.scaleBand()
         .domain(variables.map(v => v.key))
-        .range([0, gridSize * variables.length])
+        .range([0, matrixSize])
         .padding(0.02);
     
     const yScale = d3.scaleBand()
         .domain(variables.map(v => v.key))
-        .range([0, gridSize * variables.length])
+        .range([0, matrixSize])
         .padding(0.02);
-    
-    // Background
-    plotG.append("rect")
-        .attr("width", innerW)
-        .attr("height", innerH)
-        .attr("fill", "#fafafa")
-        .attr("rx", 8);
     
     // Correlation cells
     const cells = plotG.selectAll(".heatmap-cell")
@@ -336,7 +328,7 @@ function renderHeatmap(correlations) {
     cells.append("rect")
         .attr("width", xScale.bandwidth())
         .attr("height", yScale.bandwidth())
-        .attr("fill", d => d.correlation !== null ? getCorrelationColor(d.correlation) : "#e5e7eb")
+        .attr("fill", d => d.correlation !== null ? getCorrelationColor(d.correlation) : "#ffffff")
         .attr("rx", 4)
         .on("mousemove", showTooltip)
         .on("mouseleave", hideTooltip);
@@ -374,18 +366,19 @@ function renderHeatmap(correlations) {
         .append("text")
         .attr("class", "heatmap-label")
         .attr("x", d => xScale(d.key) + xScale.bandwidth() / 2)
-        .attr("y", -12)
+        .attr("y", -14)
         .attr("text-anchor", "middle")
-        .attr("transform", d => {
-            const x = xScale(d.key) + xScale.bandwidth() / 2;
-            const y = -12;
-            return `rotate(-45, ${x}, ${y})`;
-        })
         .text(d => d.label);
     
     // Divider lines between climate and fire variables
-    const dividerX = xScale(fireVars[0]);
-    const dividerY = yScale(climateVars[climateVars.length - 1]) + yScale.bandwidth();
+    const climateLast = climateVars[climateVars.length - 1];
+    const fireFirst = fireVars[0];
+    const climateEndX = xScale(climateLast) + xScale.bandwidth();
+    const fireStartX = xScale(fireFirst);
+    const climateEndY = yScale(climateLast) + yScale.bandwidth();
+    const fireStartY = yScale(fireFirst);
+    const dividerX = (climateEndX + fireStartX) / 2;
+    const dividerY = (climateEndY + fireStartY) / 2;
     
     // Vertical divider
     plotG.append("line")
@@ -393,35 +386,37 @@ function renderHeatmap(correlations) {
         .attr("x1", dividerX)
         .attr("y1", 0)
         .attr("x2", dividerX)
-        .attr("y2", innerH);
+        .attr("y2", matrixSize);
     
     // Horizontal divider
     plotG.append("line")
         .attr("class", "axis-line")
         .attr("x1", 0)
         .attr("y1", dividerY)
-        .attr("x2", innerW)
+        .attr("x2", matrixSize)
         .attr("y2", dividerY);
     
     // Section labels
     const sectionLabelOffset = -48;
+    const climateCenterX = d3.mean(climateVars, key => xScale(key) + xScale.bandwidth() / 2);
+    const fireCenterX = d3.mean(fireVars, key => xScale(key) + xScale.bandwidth() / 2);
     
     plotG.append("text")
-        .attr("x", gridSize * 1.5)
+        .attr("x", climateCenterX)
         .attr("y", sectionLabelOffset)
         .attr("text-anchor", "middle")
         .style("font-size", "12px")
         .style("font-weight", "700")
-        .style("fill", "#264653")
+        .style("fill", "#4d6571")
         .text("CLIMATE FACTORS");
     
     plotG.append("text")
-        .attr("x", gridSize * (3.5 + 1.5))
+        .attr("x", fireCenterX)
         .attr("y", sectionLabelOffset)
         .attr("text-anchor", "middle")
         .style("font-size", "12px")
         .style("font-weight", "700")
-        .style("fill", "#f4a261")
+        .style("fill", "#4d6571")
         .text("WILDFIRE TYPES");
     
     // Year range label
@@ -434,47 +429,6 @@ function renderHeatmap(correlations) {
         .style("font-family", "Space Grotesk, sans-serif")
         .style("fill", "#64748b")
         .text(`${startYear} - ${endYear}`);
-}
-
-// Render variable legend
-function renderVariableLegend() {
-    variableLegend.html("");
-    
-    const climateSection = variableLegend.append("div")
-        .style("margin-bottom", "0.5rem");
-    
-    climateSection.append("div")
-        .style("font-size", "0.72rem")
-        .style("font-weight", "700")
-        .style("color", "#64748b")
-        .style("margin-bottom", "0.25rem")
-        .text("CLIMATE");
-    
-    climateVars.forEach(v => {
-        const item = climateSection.append("div").attr("class", "variable-item");
-        item.append("span").attr("class", "variable-color")
-            .style("background-color", variables.find(x => x.key === v).color);
-        item.append("span").attr("class", "variable-name")
-            .text(variables.find(x => x.key === v).label);
-    });
-    
-    const fireSection = variableLegend.append("div")
-        .style("margin-top", "0.5rem");
-    
-    fireSection.append("div")
-        .style("font-size", "0.72rem")
-        .style("font-weight", "700")
-        .style("color", "#64748b")
-        .style("margin-bottom", "0.25rem")
-        .text("WILDFIRE TYPES");
-    
-    fireVars.forEach(v => {
-        const item = fireSection.append("div").attr("class", "variable-item");
-        item.append("span").attr("class", "variable-color")
-            .style("background-color", variables.find(x => x.key === v).color);
-        item.append("span").attr("class", "variable-name")
-            .text(variables.find(x => x.key === v).label);
-    });
 }
 
 // Render insights
@@ -726,7 +680,6 @@ async function loadData() {
         });
         
         initYearRangeWidget();
-        renderVariableLegend();
         update();
         
     } catch (err) {

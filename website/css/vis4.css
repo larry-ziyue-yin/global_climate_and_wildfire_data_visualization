@@ -159,10 +159,10 @@
 }
 
 .vis4-layout {
-  --vis4-panel-height: clamp(620px, 72vh, 860px);
+  --vis4-panel-height: clamp(640px, 74vh, 900px);
   display: grid;
-  grid-template-areas: "chart info insights";
-  grid-template-columns: minmax(0, 2.2fr) minmax(240px, 0.62fr) minmax(290px, 0.88fr);
+  grid-template-areas: "chart info";
+  grid-template-columns: minmax(0, 2.75fr) minmax(320px, 1fr);
   align-items: stretch;
   gap: 0.85rem;
 }
@@ -172,7 +172,7 @@
   position: relative;
   border: 1px solid rgba(22, 36, 47, 0.12);
   border-radius: 14px;
-  background: #ffffffd6;
+  background: #fff;
   padding: 0.6rem;
   height: var(--vis4-panel-height);
   display: flex;
@@ -186,7 +186,7 @@
   height: 100%;
   display: block;
   border-radius: 10px;
-  background: transparent;
+  background: #fff;
 }
 
 .heatmap-tooltip {
@@ -241,21 +241,10 @@
   background: #ffffffd6;
   padding: 0.75rem 0.85rem;
   height: var(--vis4-panel-height);
-  display: grid;
-  grid-auto-rows: min-content;
-  align-content: start;
+  display: flex;
+  flex-direction: column;
   gap: 0.65rem;
   overflow: auto;
-}
-
-.insights-panel {
-  grid-area: insights;
-  border: 1px solid rgba(22, 36, 47, 0.12);
-  border-radius: 14px;
-  background: #ffffffd6;
-  padding: 0.75rem 0.85rem;
-  height: var(--vis4-panel-height);
-  display: flex;
 }
 
 .info-section {
@@ -271,31 +260,6 @@
   font-size: 0.95rem;
   color: #1f3b47;
   font-weight: 700;
-}
-
-.variable-legend {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.variable-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.82rem;
-  color: #2f4b58;
-}
-
-.variable-color {
-  width: 14px;
-  height: 14px;
-  border-radius: 4px;
-  flex-shrink: 0;
-}
-
-.variable-name {
-  font-weight: 600;
 }
 
 .correlation-scale {
@@ -338,10 +302,6 @@
   flex-direction: column;
   min-height: 0;
   height: 100%;
-}
-
-.insights-panel .insight-section {
-  width: 100%;
 }
 
 .insights-list {
@@ -409,8 +369,10 @@
 }
 
 .axis-line {
-  stroke: #94a3b8;
-  stroke-width: 1;
+  stroke: #748896;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0.82;
 }
 
 .grid-line {
@@ -423,15 +385,13 @@
   .vis4-layout {
     grid-template-areas:
       "chart"
-      "info"
-      "insights";
+      "info";
     grid-template-columns: 1fr;
     --vis4-panel-height: auto;
   }
 
   .chart-panel,
-  .info-panel,
-  .insights-panel {
+  .info-panel {
     height: auto;
   }
 

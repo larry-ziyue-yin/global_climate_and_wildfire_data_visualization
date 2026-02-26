@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Visualization 5 Template</title>
+  <title>Visualization 5 - California Wildfire Word Cloud</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="css/vis1.css">
+  <link rel="stylesheet" type="text/css" href="css/vis5.css">
 </head>
 <body>
   <div class="bg-layer bg-layer-top"></div>
@@ -36,18 +36,61 @@
   <main class="page-content">
     <section class="intro-card">
       <p class="eyebrow">Visualization 5</p>
-      <h1>Template for Visualization 5</h1>
-      <p class="intro-text">This is a baseline layout for the final visualization page. Keep this frame and replace the panel with your completed visual story.</p>
+      <h1>California Wildfire Discussion Word Cloud</h1>
+      <p class="intro-text">
+        This view summarizes wildfire-related terms from social media text. Word size encodes frequency,
+        while color reflects sentiment polarity (positive, neutral, negative). Use the slider to control how
+        many top terms are included in the cloud.
+      </p>
+      <div class="control-grid">
+        <label class="control-label" for="topn-slider">
+          Top N Words
+          <input id="topn-slider" type="range" min="20" max="500" value="200" step="10">
+          <span id="topn-value">200</span>
+        </label>
+      </div>
+      <p id="vis5-status" class="status-line">Loading word cloud data...</p>
     </section>
 
     <section class="chart-card">
-      <div class="chart-wrap chart-placeholder-wrap">
-        <div class="chart-placeholder">
-          <p class="placeholder-title">Visualization 5 Placeholder</p>
-          <p>Chart area reserved for implementation.</p>
+      <div class="chart-wrap vis5-stage">
+        <div class="vis5-layout">
+          <div class="chart-panel">
+            <svg id="wordcloud-svg" aria-label="California wildfire word cloud"></svg>
+            <div id="wordcloud-tooltip" class="wordcloud-tooltip"></div>
+          </div>
+
+          <aside class="info-panel">
+            <div class="info-section">
+              <h2>Sentiment Legend</h2>
+              <div class="legend-list">
+                <div class="legend-item"><span class="legend-dot positive"></span><span>Positive (&gt; 0.05)</span></div>
+                <div class="legend-item"><span class="legend-dot neutral"></span><span>Neutral (-0.05 to 0.05)</span></div>
+                <div class="legend-item"><span class="legend-dot negative"></span><span>Negative (&lt; -0.05)</span></div>
+              </div>
+            </div>
+
+            <div class="info-section">
+              <h2>Summary</h2>
+              <div id="summary-grid" class="summary-grid">
+                <div class="summary-item"><span class="summary-label">Displayed Terms</span><span id="summary-terms" class="summary-value">-</span></div>
+                <div class="summary-item"><span class="summary-label">Total Frequency</span><span id="summary-frequency" class="summary-value">-</span></div>
+                <div class="summary-item"><span class="summary-label">Avg Sentiment</span><span id="summary-sentiment" class="summary-value">-</span></div>
+              </div>
+            </div>
+
+            <div class="info-section top-terms-section">
+              <h2>Most Frequent Terms</h2>
+              <ol id="top-terms" class="top-terms-list"></ol>
+            </div>
+          </aside>
         </div>
       </div>
     </section>
   </main>
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.7/d3.layout.cloud.min.js"></script>
+  <script src="js/vis5.js"></script>
 </body>
 </html>

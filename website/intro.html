@@ -39,9 +39,9 @@
       <p class="eyebrow">Introduction</p>
       <h1>Global Climate and Wildfire Data Visualization</h1>
       <p class="intro-text">
-        This project explores how climate indicators and global wildfire detections co-evolve over time.
-        We combine yearly climate summaries with wildfire detection records and build linked visual narratives
-        across multiple interactive views.
+        This project explores how climate indicators and wildfire signals co-evolve across temporal, spatial,
+        country-level, correlation, and text perspectives. We combine yearly climate summaries, sampled global
+        wildfire detections, and wildfire-related language data into five coordinated interactive views.
       </p>
     </section>
 
@@ -50,14 +50,16 @@
         <article class="intro-panel">
           <h2>Project Focus</h2>
           <p>
-            We study global wildfire detections and compare them with three climate signals:
-            CO2 emissions, near-surface temperature, and precipitation.
+            We study wildfire activity under changing climate conditions using three global signals:
+            CO2 emissions, annual temperature, and precipitation.
           </p>
           <h3>Core Questions</h3>
           <ul class="intro-list">
             <li>How do wildfire detections change across years, months, and days?</li>
-            <li>Do climate indicators show similar long-term trends with wildfire activity?</li>
+            <li>Do long-term climate indicators move with wildfire activity trends?</li>
             <li>How do country-level CO2 and temperature-change patterns differ by region?</li>
+            <li>Which climate-wildfire variable pairs show stronger correlations?</li>
+            <li>What sentiment and themes appear in wildfire-related social media text?</li>
           </ul>
         </article>
 
@@ -70,6 +72,7 @@
             <li><code>data/preprocessed/global_tem_by_year.csv</code> global yearly temperature summary</li>
             <li><code>data/preprocessed/global_precip_by_year.csv</code> global yearly precipitation summary</li>
             <li><code>data/co2/owid-co2-data.csv</code> country-level CO2, population, and temperature-change metrics</li>
+            <li><code>data/preprocessed/vis5/sentiment_analysis_wildfire_cleaned.csv</code> wildfire text frequency + sentiment pairs</li>
           </ul>
         </article>
       </div>
@@ -80,8 +83,8 @@
       <div class="guide-grid">
         <a class="guide-card" href="./vis1.html">
           <p class="guide-tag">Visualization 1</p>
-          <h3>Climate Drivers + Fire Counts</h3>
-          <p>Stacked bars with metric-switchable trend line.</p>
+          <h3>Fire Counts + Climate Trends</h3>
+          <p>Two aligned panels: stacked annual detections (top) and switchable climate trend line (bottom).</p>
         </a>
         <a class="guide-card" href="./vis2.html">
           <p class="guide-tag">Visualization 2</p>
@@ -95,13 +98,13 @@
         </a>
         <a class="guide-card" href="./vis4.html">
           <p class="guide-tag">Visualization 4</p>
-          <h3>In Progress</h3>
-          <p>Reserved for your fourth analytical view.</p>
+          <h3>Correlation Matrix</h3>
+          <p>Interactive climate-wildfire correlation heatmap with range slider and key insights panel.</p>
         </a>
         <a class="guide-card" href="./vis5.html">
           <p class="guide-tag">Visualization 5</p>
-          <h3>In Progress</h3>
-          <p>Reserved for your final synthesis view.</p>
+          <h3>California Wildfire Word Cloud</h3>
+          <p>Top-N term cloud with sentiment colors, hover details, and frequency/sentiment summaries.</p>
         </a>
       </div>
     </section>

@@ -14,11 +14,18 @@ This repository contains an interactive website that explores global climate ind
 
 Current pages:
 - `website/intro.html`: project introduction, data overview, visualization guide
-- `website/vis1.html`: annual wildfire detections by type with climate trend overlays
+- `website/vis1.html`: two-panel annual wildfire detections (stacked bars) + switchable climate trend line
 - `website/vis2.html`: global wildfire map + rotating globe with year/month/day playback
 - `website/vis3.html`: country-level bubble plot (CO2 vs temperature change, bubble size by population)
-- `website/vis4.html`: unified template page (in progress)
-- `website/vis5.html`: unified template page (in progress)
+- `website/vis4.html`: climate-wildfire correlation matrix with year-range slider and insight panel
+- `website/vis5.html`: California wildfire word cloud with sentiment coloring and Top-N control
+
+Key interactions:
+- `vis1`: year-hover linkage between top bar panel and bottom climate panel, with per-year tooltip summary
+- `vis2`: timeline playback plus globe rotation controls
+- `vis3`: year playback and region/country filters
+- `vis4`: dual-handle year-range slider and animated range playback
+- `vis5`: Top-N slider, sentiment legend, and term-level hover details
 
 ## Repository Structure
 
@@ -26,6 +33,8 @@ Current pages:
 - `website/js/bar.js`: logic for Visualization 1
 - `website/js/vis2.js`: logic for Visualization 2
 - `website/js/vis3.js`: logic for Visualization 3
+- `website/js/vis4.js`: logic for Visualization 4
+- `website/js/vis5.js`: logic for Visualization 5
 - `data/preprocessed/`: preprocessed CSVs used directly by website pages
 - `data/co2/`: OWID CO2 dataset used by Visualization 3
 - `scripts/build_vis2_fire_samples.py`: script to generate vis2 sampled point files
@@ -48,6 +57,15 @@ Current pages:
 - Visualization 3 (`vis3`)
   - `data/co2/owid-co2-data.csv`
   - `data/preprocessed/vis3/country_to_region.csv`
+
+- Visualization 4 (`vis4`)
+  - `data/preprocessed/wildfire_count_by_year_type.csv`
+  - `data/preprocessed/global_co2_by_year.csv`
+  - `data/preprocessed/global_tem_by_year.csv`
+  - `data/preprocessed/global_precip_by_year.csv`
+
+- Visualization 5 (`vis5`)
+  - `data/preprocessed/vis5/sentiment_analysis_wildfire_cleaned.csv`
 
 ## Important Note About Raw Wildfire Data
 

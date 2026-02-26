@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Visualization 4</title>
+  <title>Visualization 4 - Climate-Wildfire Correlation Heatmap</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="css/vis1.css">
+  <link rel="stylesheet" type="text/css" href="css/vis4.css">
 </head>
 <body>
   <div class="bg-layer bg-layer-top"></div>
@@ -36,21 +36,81 @@
   <main class="page-content">
     <section class="intro-card">
       <p class="eyebrow">Visualization 4</p>
-      <h1>Visualization 4 (In Progress)</h1>
+      <h1>Climate-Wildfire Correlation Matrix</h1>
       <p class="intro-text">
-        This page has been aligned with the same header, spacing, and card system used across
-        Introduction and Visualizations 1-3. Replace the placeholder panel below with the final vis4 chart.
+        Explore the statistical relationships between climate indicators (CO2, temperature, precipitation) 
+        and wildfire detections by type. The heatmap reveals how environmental factors correlate with 
+        different fire source categories over time.
       </p>
+      <div class="control-grid">
+        <div class="year-range-widget" aria-label="Year range selector">
+          <span class="year-range-title">Year Range</span>
+          <div class="year-range-slider">
+            <div class="year-range-track"></div>
+            <div id="year-range-fill" class="year-range-fill"></div>
+            <input id="year-range-start" type="range" min="0" max="0" step="1" value="0" aria-label="Start year">
+            <input id="year-range-end" type="range" min="0" max="0" step="1" value="0" aria-label="End year">
+          </div>
+          <div class="year-range-values">
+            <span id="year-range-start-label">-</span>
+            <span class="year-range-sep">to</span>
+            <span id="year-range-end-label">-</span>
+          </div>
+        </div>
+        <button id="play-button" class="control-button">Play</button>
+        <label class="control-label" for="speed-slider">
+          Speed
+          <input id="speed-slider" type="range" min="0.5" max="2.0" value="1.0" step="0.1">
+          <span id="speed-value">1.0x</span>
+        </label>
+      </div>
+      <p id="vis4-status" class="status-line">Loading data...</p>
     </section>
 
     <section class="chart-card">
-      <div class="chart-wrap chart-placeholder-wrap">
-        <div class="chart-placeholder">
-          <p class="placeholder-title">Visualization 4 Placeholder</p>
-          <p>Main chart container reserved for implementation.</p>
+      <div class="chart-wrap vis4-stage">
+        <div class="vis4-layout">
+          <div class="chart-panel">
+            <svg id="heatmap-svg" aria-label="Correlation heatmap"></svg>
+            <div id="heatmap-tooltip" class="heatmap-tooltip"></div>
+          </div>
+          <aside class="info-panel">
+            <div class="info-section">
+              <h2>Variable Guide</h2>
+              <div id="variable-legend" class="variable-legend"></div>
+            </div>
+            <div class="info-section">
+              <h2>Correlation Strength</h2>
+              <div class="correlation-scale">
+                <div class="scale-bar"></div>
+                <div class="scale-labels">
+                  <span>-1.0</span>
+                  <span>-0.5</span>
+                  <span>0</span>
+                  <span>+0.5</span>
+                  <span>+1.0</span>
+                </div>
+                <div class="scale-desc">
+                  <span>Negative</span>
+                  <span>Positive</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+          <aside class="insights-panel">
+            <div class="info-section insight-section">
+              <h2>Key Insights</h2>
+              <div id="insights-list" class="insights-list">
+                <p class="insight-placeholder">Hover over cells to see correlation details</p>
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
     </section>
   </main>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="js/vis4.js"></script>
 </body>
 </html>

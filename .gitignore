@@ -212,3 +212,4 @@ example/
 data/wild_fire_nasa/*
 !data/wild_fire_nasa/.gitkeep
 .DS_Store
+.zip
